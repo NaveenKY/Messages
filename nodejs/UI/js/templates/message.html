@@ -1,0 +1,39 @@
+<!--
+* @author Naveen Kumar <imnaveenyadav@gmail.com> 
+* version: 1.0.0 
+* https://github.com/NaveenKY/Messages/
+*-->
+<form class="form message-window-body" onsubmit="return false;">
+	<header>Messages</header>
+	<fieldset>					
+		<section>
+			<div class="row">
+				<div class="form-group col col-3 user-list">
+					<div rv-id="item:name" rv-each-item="users:" class="user-tile">
+						<div class="row">
+							<section class="col col-3">
+								<img src="images/ProfilePlaceholder.jpg" height="50" width="50" />
+							</section>
+							<section class="col col-1"></section>
+							<section class="col col-8">
+								<h2 class="text-with-ellipsis">{item:name}</h2>
+							</section>
+						</div>
+					</div>
+				</div>
+				<div class="form-group col col-9">
+					<label class="textarea">
+						<textarea rows="17" id="msgArea" rv-value="model:chatMessages" readonly></textarea>
+					</label><br/><br/>
+					<label class="input">
+						<i class="icon-append fa-envelope"></i>
+						<input type="text" name="message" id="message" rv-value="model:message" autocomplete="off" />
+					</label>
+				</div>
+			</div>
+		</section>
+	</fieldset>
+	<footer>
+		<button type="button" id="send" class="button">Send</button>
+	</footer>
+</form>

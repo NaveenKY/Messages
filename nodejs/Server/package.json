@@ -1,0 +1,16 @@
+/** 
+* @author Naveen Kumar <imnaveenyadav@gmail.com> 
+* version: 1.0.0 
+* https://github.com/NaveenKY/Messages/
+*/ 
+
+{
+    "name": "Messages",
+    "version": "1.0.0",
+    "keywords": ["util", "functional", "server", "client", "browser"],
+    "author": "Naveen_Kumar36",
+    "contributors": [],
+    "dependencies": {
+        "websocket": "^1.0.22"
+    }
+}

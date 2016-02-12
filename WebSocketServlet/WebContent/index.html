@@ -1,0 +1,38 @@
+<!--
+* @author Naveen Kumar <imnaveenyadav@gmail.com> 
+* version: 1.0.0 
+* https://github.com/NaveenKY/Messages/
+*-->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="css/style.css" />
+<title>Message</title>
+<script src="js/Main.js" type="text/javascript"></script>
+</head>
+<body>
+	<div id="new-user" class="center-window new-user">
+		<div>
+			Enter your Name : <input id="userName" type="Text" /><br />
+			<span id="invalid-username" class="error-msg"></span>
+		</div>
+		<br />
+		<div>
+			<input type="button" value="Continue" onclick="next()" />
+		</div>
+	</div>
+	<div id="message-window" class="center-window message-window">
+		<div>
+			<textarea rows="7" cols="60" id="msgArea" readonly></textarea>
+		</div>
+		<br />
+		<div>
+			<input id="msg" type="text" /> <input id="sendMessage" type="button" value="Send"
+				onclick="postToServer()" disabled="disabled"/>
+		</div>
+		<span id="invalid-msg" class="error-msg"></span>
+	</div>
+	<div id="user-window" class="center-window user-window"></div>
+</body>
+</html>

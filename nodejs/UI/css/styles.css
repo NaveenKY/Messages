@@ -1,0 +1,407 @@
+/** 
+* @author Naveen Kumar <imnaveenyadav@gmail.com> 
+* version: 1.0.0 
+* https://github.com/NaveenKY/Messages/
+*/ 
+@import url("font-awesome.min.css");
+@import url("forms.css");
+
+html, body {
+	margin: 1px;
+	padding: o;
+	background-attachment: fixed;
+	background-position: 50% 50%;
+	background-size: cover;
+}
+#content {
+	margin: 10px;
+	padding-top: 60px;
+}
+#header {
+	position: fixed;
+	width: 100%;
+	top: 0;
+	left: 0;
+	z-index: 15000;
+}
+#dialog {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background: rgba(0, 0, 0, 0.2);
+	top: 0%;
+	left: 0%;
+	display: none;
+}
+#dialogContent {
+	position: fixed;
+	width: 500px;
+	height: 500px;
+	top: 50%;
+	left: 50%;
+	padding: 0px;
+	margin: 0px;
+	transform: translate(-50%, -50%);
+	background-color: rgba(248,248,248,.9);
+	border-collapse: collapse;
+	-moz-box-shadow: 0 0 5px #888;
+	-webkit-box-shadow: 0 0 5px#888;
+	box-shadow: rgba(0, 0, 0, 0.137255) 0px 2px 2px 0px, rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.117647) 0px 1px 5px 0px;
+}
+a {
+	text-decoration: underline;
+}
+a:hover {
+	text-decoration: none;
+}
+.bg-img {
+	//background-image: url(../images/background.jpg);
+}
+.body {
+	margin: 0 auto;
+}
+.login-body {
+	max-width: 30%;
+	margin-left: 35%;
+}
+.message-window-body {
+	max-width: 80%;
+	margin-left: 10%;
+}
+.has-error .help-block {
+	color: #ed1c24;
+}
+.header {
+	padding: 0px;
+	margin: 0px;
+	background-color: blue;
+}
+.fa {
+	font-size: 16px;
+}
+.margin-top-40 {
+	margin-top: 40px;
+}
+@media screen and (max-width: 600px) {
+	.body {
+		padding: 20px;
+	}
+}
+.width-10 {
+	min-width: 10%;
+}
+.width-20 {
+	min-width: 20%;
+}
+.width-30 {
+	min-width: 30%;
+}
+.width-40 {
+	min-width: 40%;
+}
+.width-50 {
+	min-width: 50%;
+}
+.width-60 {
+	min-width: 60%;
+}
+.width-70 {
+	min-width: 70%;
+}
+.width-80 {
+	min-width: 80%;
+}
+.width-90 {
+	min-width: 90%;
+}
+.width-100 {
+	min-width: 100%;
+}
+/*Start of Loading patter */
+.progress-panel {
+    width:100%;
+    height:100%;
+    position:fixed;
+    z-index:1;
+	display: none;
+}
+.progress-spinner {
+	padding-top: 25%;
+    padding-left: 44%;
+}
+.loading-progress-bar {
+	height: 12%;
+	width: 12%;
+	margin: 0px auto;
+	position: relative;
+}
+/*End of Loading patter */
+.panel {
+	background: rgba(255,255,255,.9);
+	width: 100%;
+	min-height: 100px;
+	box-shadow: 0 0 20px rgba(0,0,0,.3);
+	font: 13px/1.55 'Open Sans', Helvetica, Arial, sans-serif;
+	color: #666;
+	position: relative;
+	z-index: 10;
+}
+.panel .panel-header {
+	height: 20px;
+	background-color: rgba(248,248,248,.9);
+	border-bottom: 1px solid rgba(0,0,0,.1);
+	font-size: 15px;
+	font-weight: lightbold;
+	color: #232323;
+	padding: 10px;
+}
+.panel .panel-body {
+	min-height: 100px;
+	padding: 20px;
+}
+/**/
+/* datepicker */
+/**/
+.ui-datepicker {
+	display: none;
+	padding: 10px 12px;
+	background: rgba(255,255,255,0.9);
+	box-shadow: 0 0 10px rgba(0,0,0,.3);
+	font: 13px/1.55 'Open Sans', Helvetica, Arial, sans-serif;
+	text-align: center;
+	color: #666;
+}
+.ui-datepicker a {
+	color: #404040;
+}
+.ui-datepicker-header {
+	position: relative;
+	margin: -10px -12px 10px;
+	padding: 10px;
+	border-bottom: 1px solid rgba(0,0,0,.1);
+	font-size: 15px;
+	line-height: 27px;
+}
+.ui-datepicker-prev, 
+.ui-datepicker-next {
+	position: absolute;
+	top: 0;
+	display: block;
+	width: 47px;
+	height: 47px;
+	font-size: 15px;
+	line-height: 47px;
+	text-decoration: none;
+	cursor: pointer;
+}
+.ui-datepicker-prev {
+	left: 0;
+}
+.ui-datepicker-next {
+	right: 0;
+}
+.ui-datepicker-calendar {
+	border-collapse: collapse;
+	font-size: 13px;
+	line-height: 27px;
+}
+.ui-datepicker-calendar th {
+	color: #999;
+}
+.ui-datepicker-calendar a,
+.ui-datepicker-calendar span {
+	display: block;
+	width: 31px;
+	margin: auto;
+	text-decoration: none;
+	color: #404040;
+}
+.ui-datepicker-calendar a:hover {
+	background: rgba(0,0,0,.05);	
+}
+.ui-datepicker-calendar span {
+	color: #bfbfbf;
+}
+.ui-datepicker-today a {
+	font-weight: 700;
+}
+.ui-datepicker-calendar .ui-state-active {
+	background: rgba(0,0,0,.05);
+	cursor: default;	
+}
+.ui-datepicker-inline {
+	border: 2px solid #e5e5e5;
+	background: #fff;
+	box-shadow: none;
+}
+.ui-datepicker-inline .ui-datepicker-header {
+	line-height: 47px;
+}
+.ui-datepicker-inline .ui-datepicker-calendar {
+	width: 100%;
+}
+/* Button css*/
+.btn-without-border {
+	border: none;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	background-position: center;
+	cursor: pointer;
+	color: #21A0D2;
+}
+.plus-btn {
+	background-image: url("../images/add.png");
+	width: 40px;
+	height: 40px;
+}
+.remove-btn {
+	background-image: url("../images/remove.png");
+	width: 40px;
+	height: 40px;
+}
+
+/*Contact tile*/
+.contact-tile {
+	width: 90%;
+	height: 100%;
+	border: solid thin lightgray;
+	background-color: rgba(248,248,248,.9);
+	border-collapse: collapse;
+	-moz-box-shadow: 0 0 5px #888;
+	-webkit-box-shadow: 0 0 5px#888;
+	box-shadow: rgba(0, 0, 0, 0.137255) 0px 2px 2px 0px, rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.117647) 0px 1px 5px 0px;
+	padding: 15px;
+	border-radius: 10px;
+}
+.contact-tile .row{
+	text-align: right;
+	border-bottom: 1px solid rgba(0,0,0,.1);
+}
+.contact-tile button{
+	font-size: 12px;
+	font-weight: bold;
+}
+.contact-tile .footer {
+	min-height: 20px;
+}
+.contact-tile .footer :last-child{
+	float: right;
+	padding-top: 2px;
+}
+
+.user-tile {
+	width: 90%;
+	height: 50px;
+	border: solid thin lightgray;
+	background-color: rgba(248,248,248,.9);
+	border-collapse: collapse;
+	-moz-box-shadow: 0 0 5px #888;
+	-webkit-box-shadow: 0 0 5px#888;
+	box-shadow: rgba(0, 0, 0, 0.137255) 0px 2px 2px 0px, rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.117647) 0px 1px 5px 0px;
+	padding: 5px;
+	margin: 5px;
+}
+.user-selected {
+	background-color: dodgerblue;
+}
+.user-tile  section{
+	margin: 0px;
+}
+/*Message tile*/
+.message-tile {
+	width: 90%;
+	height: 100%;
+	border: solid thin lightgray;
+	background-color: rgba(248,248,248,.9);
+	border-collapse: collapse;
+//	-moz-box-shadow: 0 0 5px #888;
+//	-webkit-box-shadow: 0 0 5px#888;
+//	box-shadow: rgba(0, 0, 0, 0.137255) 0px 2px 2px 0px, rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.117647) 0px 1px 5px 0px;
+	padding: 5px;
+}
+.message-tile .row section {
+	margin-bottom: 0px;
+}
+.text-with-ellipsis {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	display:block;
+}
+.right-align {
+	float: right;
+}
+.text-right {
+	float: right;
+	text-align: right;
+}
+.search-progress-spinner {
+	right: 5px;
+    padding-left: 3px;
+	position: absolute;
+    top: 5px;
+    width: 29px;
+    height: 29px;
+    font-size: 15px;
+    line-height: 29px;
+    text-align: center;
+	color: black;
+	font-size: 20px;
+	display: none;
+}
+.choose {
+	width: 24px;
+	height: 24px;
+	border: none;
+	background-color: #4285f4;
+	outline: none;
+	border-radius: 50%;
+    color: white;
+    box-shadow: rgba(0, 0, 0, 0.137255) 0px 2px 2px 0px, rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.117647) 0px 1px 5px 0px;
+	font-size: 16px;
+	cursor: pointer;
+}
+.choose:hover {
+	background-color: #39a1f4;
+}
+.forum-tile {
+    padding: 10px;
+    border: solid thin lightgray;
+	background-color: rgba(248,248,248,.9);
+	border-collapse: collapse;
+	-moz-box-shadow: 0 0 5px #888;
+	-webkit-box-shadow: 0 0 5px#888;
+	box-shadow: rgba(0, 0, 0, 0.137255) 0px 1px 1px 0px, rgba(0, 0, 0, 0.2) 0px 1px 1px -1px, rgba(0, 0, 0, 0.117647) 0px 1px 1px 0px;
+	font-weight: bold;
+	line-height: 2;
+}
+
+.forum-tile section {
+	margin-bottom: 0px;
+}
+.forum-members {
+	padding: 10px;
+	background-color: rgba(211, 211, 211, 1);
+	height: 100px;
+	width: 20%;
+	box-shadow: rgba(0, 0, 0, 0.137255) 0px 2px 2px 0px, rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.117647) 0px 1px 5px 0px;
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 18px;
+	font-weight: bold;
+}
+.forum-participants-dragover {
+	background-color: rgba(211, 211, 211, 0.7);
+}
+.sticky {
+	position: fixed;
+	top: 10%;
+}
+.user-list {
+	border-right: solid 1px #e5e5e5;
+	height: 50vh;
+	min-height: 50vh;
+	max-height: 50vh;
+}
