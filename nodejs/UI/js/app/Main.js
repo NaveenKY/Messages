@@ -90,20 +90,6 @@ define(function (require) {
 			$('#dialog').css('display', 'none');
 		};
 
-		require(['service/AuthService'], function(){
-			Backbone.history.start();
-			$(document).ready(function() {
-				$(window).scroll(function() {
-					var s = $(".need-on-screen");
-					var pos = s.position(); 
-					var windowpos = $(window).scrollTop();
-					if (windowpos >= pos.top) {
-						s.addClass("sticky");
-					} else {
-						s.removeClass("sticky"); 
-					}
-				});
-			});
-		});
+		Backbone.history.start();
 	});
 });
