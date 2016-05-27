@@ -1,49 +1,103 @@
-/** 
-* @author Naveen Kumar <imnaveenyadav@gmail.com> 
-* version: 1.0.0 
-* https://github.com/NaveenKY/Messages/
-*/ 
 package com.message;
 
+import java.io.IOException;
+import java.nio.CharBuffer;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.websocket.OnClose;
+import javax.websocket.OnMessage;
+import javax.websocket.OnOpen;
+import javax.websocket.Session;
+import javax.websocket.server.ServerEndpoint;
 
-import org.apache.catalina.websocket.StreamInbound;
-import org.apache.catalina.websocket.WebSocketServlet;
+import com.google.gson.Gson;
+import com.message.bean.MessageBean;
 
-@SuppressWarnings("deprecation")
-@WebServlet("/message")
-public class MessageServlet extends WebSocketServlet {
+@ServerEndpoint("/message")
+public class MessageServlet {
 
-	private static final long serialVersionUID = 1L;
+	public static ConcurrentHashMap<String, ConcurrentHashMap<String, Session>> clients = new ConcurrentHashMap<String, ConcurrentHashMap<String, Session>>();
 
-	public static ConcurrentHashMap<String, ConcurrentHashMap<String, StreamInbound>> clients = new ConcurrentHashMap<String, ConcurrentHashMap<String, StreamInbound>>();
-
-	@Override
-	protected StreamInbound createWebSocketInbound(String protocol,
-			HttpServletRequest httpServletRequest) {
-
-		HttpSession session = httpServletRequest.getSession();
-		String userId = httpServletRequest.getParameter("userId");
-		StreamInbound client;
-		if(clients.containsKey(userId)) {
-			ConcurrentHashMap<String, StreamInbound> userSessions = clients.get(userId);
-			if(userSessions.containsKey(session.getId())) {
-				client = userSessions.get(session.getId());
-				return client;
+	@OnOpen
+	public void onOpen(Session session) {
+		String userId = session.getRequestParameterMap().get("userId").get(0);
+		System.out.println(userId + " has opened a connection");
+		try {
+			if (clients.containsKey(userId)) {
+				ConcurrentHashMap<String, Session> userSessions = clients.get(userId);
+				if (!userSessions.containsKey(session.getId())) {
+					userSessions.put(session.getId(), session);
+				}
 			} else {
-				client = new MessageClient(httpServletRequest, userId);
-				userSessions.put(session.getId(), client);
+				ConcurrentHashMap<String, Session> userSessions = new ConcurrentHashMap<String, Session>();
+				userSessions.put(session.getId(), session);
+				clients.put(userId, userSessions);
 			}
-		} else {
-			client = new MessageClient(httpServletRequest, userId);
-			ConcurrentHashMap<String, StreamInbound> userSessions = new ConcurrentHashMap<String, StreamInbound>();
-			userSessions.put(session.getId(), client);
-			clients.put(userId, userSessions);
+			session.getBasicRemote().sendText("Connection Established");
+			sendUserList(session);
+		} catch (IOException ex) {
+			ex.printStackTrace();
 		}
-		return client;
+	}
+
+	@OnMessage
+	public void onMessage(String message, Session session) {
+		System.out.println("Message from " + session.getId() + ": " + message);
+		try {
+			String userId = session.getRequestParameterMap().get("userId").get(0);
+			String outbuf = CharBuffer.wrap("- " + userId + " says : \n").toString();
+			MessageBean bean = new Gson().fromJson(message, MessageBean.class);
+
+			if (bean.getType().equalsIgnoreCase(MessageConstants.TYPE_NEW_MESSAGE)) {
+				bean.getData().put("message", outbuf + bean.getData().get("message"));
+				ConcurrentHashMap<String, Session> userSessions = MessageServlet.clients.get(bean.getData().get("to"));
+				Iterator<String> sessionItr = userSessions.keySet().iterator();
+				while (sessionItr.hasNext()) {
+					String sessionId = sessionItr.next();
+					Session client = userSessions.get(sessionId);
+					client.getBasicRemote().sendText(new Gson().toJson(bean));
+				}
+			}
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	@OnClose
+	public void onClose(Session session) {
+		System.out.println("Session " + session.getId() + " has ended");
+	}
+
+	protected void sendUserList(Session session) throws IOException {
+		MessageBean userList = new MessageBean();
+		userList.setType(MessageConstants.TYPE_USER_LIST);
+		HashMap<String, String> users = new HashMap<String, String>();
+		Iterator<String> itr = clients.keySet().iterator();
+		while (itr.hasNext()) {
+			String userId = itr.next();
+			ConcurrentHashMap<String, Session> userSessions = MessageServlet.clients.get(userId);
+			Iterator<String> sessionItr = userSessions.keySet().iterator();
+			while (sessionItr.hasNext()) {
+				String sessionId = sessionItr.next();
+				Session client = (Session) userSessions.get(sessionId);
+				String name = client.getRequestParameterMap().get("userId").get(0);
+				users.put(name, name);
+			}
+		}
+		userList.setData(users);
+		String result = new Gson().toJson(userList);
+		itr = MessageServlet.clients.keySet().iterator();
+		while (itr.hasNext()) {
+			String userId = itr.next();
+			ConcurrentHashMap<String, Session> userSessions = MessageServlet.clients.get(userId);
+			Iterator<String> sessionItr = userSessions.keySet().iterator();
+			while (sessionItr.hasNext()) {
+				String sessionId = sessionItr.next();
+				Session client = (Session) userSessions.get(sessionId);
+				client.getBasicRemote().sendText(result);
+			}
+		}
 	}
 }

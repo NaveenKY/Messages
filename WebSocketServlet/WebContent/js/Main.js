@@ -1,8 +1,6 @@
-/** 
-* @author Naveen Kumar <imnaveenyadav@gmail.com> 
-* version: 1.0.0 
-* https://github.com/NaveenKY/Messages/
-*/ 
+/**
+ * 
+ */
 
 Notification.requestPermission();
 
